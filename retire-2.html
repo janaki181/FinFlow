@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Celebrating Your Retirement - FinPlanner</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a365d;
+            --secondary: #2b4c7e;
+            --accent: #3182ce;
+            --light: #ebf8ff;
+            --dark: #2d3748;
+            --success: #48bb78;
+            --warning: #ed8936;
+            --danger: #e53e3e;
+            --gray-100: #f7fafc;
+            --gray-200: #edf2f7;
+            --gray-300: #e2e8f0;
+            --gray-400: #cbd5e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            background: transparent;
+            padding: 1.5rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: var(--primary);
+            padding: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+            display: inline-block;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-link:hover {
+            color: var(--accent);
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            min-width: 200px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-link {
+            color: var(--dark);
+            text-decoration: none;
+            padding: 0.5rem;
+            display: block;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-link:hover {
+            background: var(--light);
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .menu-toggle {
+            display: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section for Retirement */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 6rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: url('/api/placeholder/1200/800') center/cover;
+            opacity: 0.1;
+            animation: rotate 60s linear infinite;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            color: white;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .retiree-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 2rem;
+            border: 5px solid white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        /* Achievements Section */
+        .achievements {
+            padding: 6rem 2rem;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: var(--dark);
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .achievement-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .achievement-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .achievement-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .achievement-card p {
+            color: var(--dark);
+            opacity: 0.8;
+        }
+
+        /* Timeline Section */
+        .timeline-section {
+            padding: 6rem 2rem;
+            background: var(--light);
+        }
+
+        .timeline-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: var(--accent);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 4px solid var(--accent);
+            border-radius: 50%;
+            top: 15px;
+            z-index: 1;
+        }
+
+        .timeline-left {
+            left: 0;
+            text-align: right;
+        }
+
+        .timeline-left::after {
+            right: -14px;
+        }
+
+        .timeline-right {
+            left: 50%;
+            text-align: left;
+        }
+
+        .timeline-right::after {
+            left: -14px;
+        }
+
+        .timeline-content {
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .timeline-content h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content .date {
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 6rem 2rem;
+            background: white;
+        }
+
+        .testimonials-slider {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonial-container {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .testimonial {
+            flex: 0 0 100%;
+            padding: 2rem;
+        }
+
+        .testimonial-content {
+            background: var(--light);
+            padding: 2rem;
+            border-radius: 12px;
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .testimonial-content::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            margin-left: -20px;
+            border-width: 20px 20px 0;
+            border-style: solid;
+            border-color: var(--light) transparent transparent;
+        }
+
+        .testimonial-content p {
+            font-style: italic;
+            font-size: 1.1rem;
+            color: var(--dark);
+            line-height: 1.7;
+        }
+
+        .testimonial-author {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .author-image {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+        }
+
+        .author-name {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .author-title {
+            color: var(--dark);
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .testimonial-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .control-btn {
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background: var(--accent);
+        }
+
+        /* Well Wishes Section */
+        .well-wishes {
+            padding: 6rem 2rem;
+            background: var(--gray-100);
+        }
+
+        .wishes-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .wish-form {
+            max-width: 600px;
+            margin: 0 auto 4rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .btn-submit {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background: var(--primary);
+        }
+
+        .wishes-wall {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .wish-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .wish-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .wish-message {
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .wish-author {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .wish-role {
+            font-size: 0.9rem;
+            color: var(--dark);
+            opacity: 0.8;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            padding: 6rem 2rem;
+            background: white;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            height: 250px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03);
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover .gallery-image {
+            transform: scale(1.1);
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 1rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: var(--gray-300);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            color: white;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px);
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .newsletter-input {
+            padding: 0.75rem;
+            border: none;
+            border-radius: 6px;
+            flex-grow: 1;
+        }
+
+        .newsletter-button {
+            padding: 0.75rem 1.5rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .newsletter-button:hover {
+            background: var(--secondary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Animation */
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--primary);
+                padding: 1rem;
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .dropdown {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                background: transparent;
+                padding: 0 1rem;
+            }
+
+            .dropdown-link {
+                color: white;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .timeline-container::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+                text-align: left;
+            }
+
+            .timeline-item::after {
+                left: 17px;
+            }
+
+            .timeline-left::after, 
+            .timeline-right::after {
+                left: 17px;
+            }
+
+            .timeline-right {
+                left: 0;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-chart-line"></i>
+                FinPlanner
+            </a>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="nav-links">
+                <div class="nav-item">
+                    <a href="#" class="nav-link">Services <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown">
+                        <a href="#" class="dropdown-link" style="color: #2d3748;">Personal Planning</a>
+                        <a href="#" class="dropdown-link" style="color: #2d3748;">Investment Advice</a>
+                        <a href="#" class="dropdown-link" style="color: #2d3748;">Retirement Planning</a>
+                        <a href="#" class="dropdown-link" style="color: #2d3748;">Tax Optimization</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link">Tools <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown">
+                        <a href="#" class="dropdown-link" style="color: #2d3748;">ROI Calculator</a>
+                        <a href="#" class="dropdown-link" style="color: #2d3748;">Budget Planner</a>
+                        <a href="#" class="dropdown-link" style="color: #2d3748;">Goal Simulator</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link">About</a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <img src="/api/placeholder/400/400" alt="Retiree Portrait" class="retiree-image">
+            <h1>Celebrating 30 Years of Excellence</h1>
+            <p>After three decades of dedication, innovative leadership, and unwavering commitment to financial excellence, we celebrate the remarkable career journey of Jessica Morgan as she embarks on her well-deserved retirement. Her vision and passion have shaped FinPlanner into the industry leader it is today.</p>
+        </div>
+    </section>
+
+    <section class="achievements" id="achievements">
+        <div class="section-title">
+            <h2>Distinguished Achievements</h2>
+            <p>Recognizing an extraordinary legacy of innovation and leadership</p>
+        </div>
+        <div class="achievements-grid">
+            <div class="achievement-card">
+                <div class="achievement-icon">
+                    <i class="fas fa-award"></i>
+                </div>
+                <h3>Leadership Excellence</h3>
+                <p>Led the company through two major market shifts, achieving consistent growth and establishing FinPlanner as an industry pioneer.</p>
+            </div>
+            <div class="achievement-card">
+                <div class="achievement-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>Team Development</h3>
+                <p>Mentored over 50 professionals who have gone on to leadership positions, creating a legacy of excellence that will continue for generations.</p>
+            </div>
+            <div class="achievement-card">
+                <div class="achievement-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <h3>Innovation Champion</h3>
+                <p>Pioneered our AI-driven financial planning approach, revolutionizing how clients experience financial guidance and planning.</p>
+            </div>
+            <div class="achievement-card">
+                <div class="achievement-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>Market Growth</h3>
+                <p>Expanded our client base by 400% and established FinPlanner in 12 new markets across the country during her tenure.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="timeline-section" id="journey">
+        <div class="section-title">
+            <h2>Career Journey</h2>
+            <p>Three decades of growth, innovation, and leadership</p>
+        </div>
+        <div class="timeline-container">
+            <div class="timeline-item timeline-left">
+                <div class="timeline-content">
+                    <span class="date">1994</span>
+                    <h3>Joined as Financial Advisor</h3>
+                    <p>Started her journey with us as a promising financial advisor, quickly establishing herself as a rising talent.</p>
+                </div>
+            </div>
+            <div class="timeline-item timeline-right">
+                <div class="timeline-content">
+                    <span class="date">2000</span>
+                    <h3>Team Lead, Investment Division</h3>
+                    <p>Promoted to lead the investment division, where she developed our first comprehensive client strategy framework.</p>
+                </div>
+            </div>
+            <div class="timeline-item timeline-left">
+                <div class="timeline-content">
+                    <span class="date">2007</span>
+                    <h3>Director of Client Services</h3>
+                    <p>Revolutionized our approach to client services, implementing systems that increased client satisfaction by 35%.</p>
+                </div>
+            </div>
+            <div class="timeline-item timeline-right">
+                <div class="timeline-content">
+                    <span class="date">2013</span>
+                    <h3>Vice President of Operations</h3>
+                    <p>Guided the company through the financial technology revolution, positioning us at the forefront of digital transformation.</p>
+                </div>
+            </div>
+            <div class="timeline-item timeline-left">
+                <div class="timeline-content">
+                    <span class="date">2018</span>
+                    <h3>Chief Strategy Officer</h3>
+                    <p>Championed the development of our AI-driven planning tools, establishing us as a pioneer in tech-enabled financial guidance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials" id="testimonials">
+        <div class="section-title">
+            <h2>Colleague Testimonials</h2>
+            <p>Words from those who had the privilege of working alongside her</p>
+        </div>
+        <div class="testimonials-slider">
+            <div class="testimonial-container">
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p>"Jessica's ability to see opportunity where others see obstacles transformed not just our company, but my own career path. Her mentorship showed me what true leadership looks like—leading with both heart and vision. The culture of excellence she fostered will continue to guide us for years to come."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="/api/placeholder/200/200" alt="Michael Chen" class="author-image">
+                        <span class="author-name">Michael Chen</span>
+                        <span class="author-title">Chief Financial Officer</span>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p>"Working with Jessica for the past 15 years has been one of the greatest privileges of my career. Her commitment to both client success and employee growth created an environment where excellence was not just encouraged but expected. She leaves behind a legacy of integrity and innovation that will forever be part of our company's DNA."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="/api/placeholder/200/200" alt="Sarah Johnson" class="author-image">
+                        <span class="author-name">Sarah Johnson</span>
+                        <span class="author-title">Director of Client Relations</span>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p>"Jessica didn't just build a successful company; she built a community of passionate professionals who genuinely care about making a difference in clients' lives. Her foresight in embracing financial technology early on positioned us years ahead of competitors. I'm honored to have learned from such a visionary leader."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="/api/placeholder/200/200" alt="Robert Williams" class="author-image">
+                        <span class="author-name">Robert Williams</span>
+                        <span class="author-title">Technology Innovation Lead</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-controls">
+                <div class="control-btn prev">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="control-btn next">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="gallery" id="gallery">
+        <div class="section-title">
+            <h2>Moments to Remember</h2>
+            <p>Capturing memories from an exceptional career</p>
+        </div>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="/api/placeholder/400/300" alt="Leadership Conference 2010" class="gallery-image">
+                <div class="gallery-caption">
+                    <h4>Leadership Conference 2010</h4>
+                    <p>Keynote address on the future of financial planning</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="/api/placeholder/400/300" alt="Team Retreat 2015" class="gallery-image">
+                <div class="gallery-caption">
+                    <h4>Team Retreat 2015</h4>
+                    <p>Strategic planning session that shaped our five-year growth plan</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="/api/placeholder/400/300" alt="Innovation Award 2018" class="gallery-image">
+                <div class="gallery-caption">
+                    <h4>Innovation Award 2018</h4>
+                    <p>Receiving industry recognition for AI implementation</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="/api/placeholder/400/300" alt="Client Appreciation Event" class="gallery-image">
+                <div class="gallery-caption">
+                    <h4>Client Appreciation Event</h4>
+                    <p>Building relationships that transcend business</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="/api/placeholder/400/300" alt="Mentorship Program Launch" class="gallery-image">
+                <div class="gallery-caption">
+                    <h4>Mentorship Program Launch</h4>
+                    <p>Creating opportunities for the next generation</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="/api/placeholder/400/300" alt="Team Celebration" class="gallery-image">
+                <div class="gallery-caption">
+                    <h4>Team Celebration</h4>
+                    <p>Commemorating our 20th anniversary milestone</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="well-wishes" id="wishes">
+        <div class="section-title">
+            <h2>Share Your Well Wishes</h2>
+            <p>Add your personal message to Jessica as she embarks on her retirement journey</p>
+        </div>
+        <div class="wishes-container">
+            <div class="wish-form">
+                <div class="form-group
+                ">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" class="form-control" placeholder="Enter your name">
+                </div>
+                <div class="form-group
+                ">
+                    <label for="message">Your Message</label>
+                    <textarea id="message" class="form-control" placeholder="Enter your message"></textarea>
+                </div>
+                <button class="btn-submit
+                ">Submit</button>
+            </div>
+            <div class="wishes-wall">
+                <div class="wish-card">
+                    <p class="wish-message">Thank you for your leadership and vision, Jessica. Your legacy will continue to inspire us for years to come.</p>
+                    <span class="wish-author">Michael Chen</span>
+                    <span class="wish-role">Chief Financial Officer</span>
+                </div>
+                <div class="wish-card">
+                    <p class="wish-message">Wishing you all the best in your retirement, Jessica. Your dedication to excellence has set the bar high for all of us.</p>
+                    <span class="wish-author">Sarah Johnson</span>
+                    <span class="wish-role">Director of Client Relations</span>
+                </div>
+                <div class="wish-card">
+                    <p class="wish-message">Congratulations on your retirement, Jessica. Your impact on our company and industry will be felt for years to come.</p>
+                    <span class="wish-author">Robert Williams</span>
+                    <span class="wish-role">Technology Innovation Lead</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h4>About Us</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Our Story</a></li>
+                    <li><a href="#">Leadership</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Services</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Personal Planning</a></li>
+                    <li><a href="#">Investment Advice</a></li>
+                    <li><a href="#">Retirement Planning</a></li>
+                    <li><a href="#">Tax Optimization</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Support</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Live Chat</a></li>
+                    <li><a href="#">Email Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                </div>
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Subscribe to our newsletter">
+                    <button type="submit" class="newsletter-button">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 FinPlanner. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const nav = document.querySelector('nav');
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
+                }
+            });
+
+            menuToggle.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+            });
+
+            const prevBtn = document.querySelector('.control-btn.prev');
+            const nextBtn = document.querySelector('.control-btn.next');
+            const testimonialContainer = document.querySelector('.testimonial-container');
+            let currentIndex = 0;
+
+            prevBtn.addEventListener('click', function() {
+                currentIndex = (currentIndex > 0) ? currentIndex - 1 : 0;
+                testimonialContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+            });
+
+            nextBtn.addEventListener('click', function() {
+                currentIndex = (currentIndex < testimonialContainer.children.length - 1) ? currentIndex + 1 : currentIndex;
+                testimonialContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+            });
+        });
+    </script>
+    </body>
+    </html></ul>

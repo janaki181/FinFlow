@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - FinPlanner</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="home.css">
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            color: #2d3748;
+            background: linear-gradient(45deg, #f6f8fa, #e8eef1);
+            background-size: 200% 200%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        header.about-header {
+            background: linear-gradient(135deg, #1a365d 0%, #2b4c7e 100%);
+            color: white;
+            padding: 8rem 0 2.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header.about-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('/api/placeholder/800/400') center/cover;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .about-title {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        section {
+            padding: 3rem;
+            margin: 2rem auto;
+            max-width: 900px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            animation: fadeIn 0.6s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        section:nth-child(even) {
+            background: linear-gradient(to right, #ffffff, #f8fafc);
+        }
+
+        h2 {
+            color: #1a365d;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(to right, #3182ce, #63b3ed);
+            border-radius: 2px;
+        }
+
+        h3 {
+            color: #2b4c7e;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: #4a5568;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #3182ce;
+        }
+
+        a {
+            color: #3182ce;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        a:hover {
+            color: #2c5282;
+        }
+
+        a:hover::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: currentColor;
+        }
+
+        @media (max-width: 768px) {
+            section {
+                padding: 2rem;
+                margin: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+            }
+        }
+
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+        <!-- Navigation Bar -->
+        <nav>
+            <div class="nav-container">
+                <a href="#" class="logo">
+                    <i class="fas fa-chart-line"></i>
+                    FinPlanner
+                </a>
+                <div class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <div class="nav-links">
+                    <div class="nav-item">
+                        <a href="#" class="nav-link">
+                            Services
+                            <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <div class="dropdown">
+                            <a href="persona_planning.html" class="dropdown-link">Personal Planning</a>
+                            <a href="investment.html" class="dropdown-link">Investment Advice</a>
+                            <a href="retire3.html" class="dropdown-link">Retirement Planning</a>
+                            <a href="#" class="dropdown-link">Tax Optimization</a>
+                        </div>
+                    </div>
+                    <div class="nav-item">
+                        <a href="#" class="nav-link">
+                            Tools
+                            <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <div class="dropdown">
+                            <a href="roicalc.html" class="dropdown-link">ROI Calculator</a>
+                            <a href="#" class="dropdown-link">Budget Planner</a>
+                            <a href="#" class="dropdown-link">Goal Simulator</a>
+                        </div>
+                    </div>
+                    <div class="nav-item">
+                        <a href="#" class="nav-link">About</a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="contact.html" class="nav-link">Contact</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    <!-- About Header -->
+    <header class="about-header">
+        <h1 class="about-title">About Us</h1>
+    </header>
+
+    <!-- Original About Us Content -->
+    <section>
+        <h2>Our Vision: Empowering Financial Futures</h2>
+        <p>At FinPlanner, we envision a world where everyone has access to the tools and knowledge necessary to take control of their financial destiny. Our mission is to empower individuals and families with innovative, AI-driven financial planning solutions that simplify the complexities of managing finances. We believe that financial literacy is a right, not a privilege, and we are dedicated to democratizing access to financial planning resources.</p>
+    </section>
+
+    <section>
+        <h2>Our Story: From Concept to Reality</h2>
+        <p>Founded in 2020, FinPlanner emerged from a shared passion for financial empowerment and technology. Our founders, a diverse group of finance professionals, tech enthusiasts, and creative thinkers, recognized a significant gap in the market for accessible financial planning tools. They set out to create a platform that combines cutting-edge technology with user-friendly design, making financial planning approachable for everyone.</p>
+        <p>From our humble beginnings, we have grown into a trusted name in the financial technology space. Our journey has been fueled by a commitment to innovation, customer feedback, and a relentless pursuit of excellence. Today, we proudly serve over a million users, helping them achieve their financial goals and secure their futures.</p>
+    </section>
+
+    <section>
+        <h2>Our Values: The Heart of FinPlanner</h2>
+        <h3>Integrity</h3>
+        <p>We believe in transparency and honesty in all our interactions. Our users trust us with their financial data, and we take that responsibility seriously. We are committed to maintaining the highest ethical standards in everything we do.</p>
+        
+        <h3>Innovation</h3>
+        <p>Innovation is at the core of our identity. We continuously explore new technologies and methodologies to enhance our platform. Our team of experts is dedicated to staying ahead of industry trends, ensuring that our users benefit from the latest advancements in financial planning.</p>
+        
+        <h3>Customer-Centricity</h3>
+        <p>Our users are our top priority. We listen to their needs and feedback, using it to shape our products and services. We strive to create an exceptional user experience, making financial planning intuitive and enjoyable.</p>
+        
+        <h3>Collaboration</h3>
+        <p>We believe that great ideas come from collaboration. Our diverse team works together, leveraging each other's strengths to create solutions that meet the needs of our users. We foster an inclusive environment where every voice is heard and valued.</p>
+    </section>
+
+    <section>
+        <h2>Our Team: The People Behind FinPlanner</h2>
+        <p>Our team is a dynamic blend of finance professionals, software engineers, designers, and customer support specialists. Each member brings unique skills and perspectives, contributing to our mission of empowering financial futures. We are passionate about what we do, and we are united by a common goal: to make financial planning accessible and effective for everyone.</p>
+        <p>We invest in our team's growth and development, providing opportunities for continuous learning and professional advancement. Our collaborative culture encourages creativity and innovation, allowing us to tackle challenges and seize opportunities together.</p>
+    </section>
+
+    <section>
+        <h2>Our Products: Tools for Success</h2>
+        <p>At FinPlanner, we offer a suite of powerful tools designed to help users navigate their financial journeys. Our platform includes:</p>
+        <ul>
+            <li><strong>Personalized Financial Planning:</strong> Tailored plans that adapt to individual goals and circumstances.</li>
+            <li><strong>Investment Tracking:</strong> Tools to monitor and optimize investment portfolios.</li>
+            <li><strong>Budgeting Solutions:</strong> User-friendly budgeting tools that simplify expense tracking and savings.</li>
+            <li><strong>Educational Resources:</strong> A wealth of articles, guides, and tutorials to enhance financial literacy.</li>
+        </ul>
+        <p>Each tool is designed with the user in mind, ensuring that our platform is not only functional but also enjoyable to use.</p>
+    </section>
+
+    <section>
+        <h2>Community Engagement: Giving Back</h2>
+        <p>We believe in the importance of giving back to the communities we serve. FinPlanner is committed to social responsibility and actively participates in initiatives that promote financial literacy and empowerment. We partner with local organizations to provide workshops, seminars, and resources that help individuals gain the knowledge they need to make informed financial decisions.</p>
+        <p>Our team volunteers regularly, contributing time and expertise to support community programs. We are dedicated to making a positive impact beyond our platform, fostering a culture of giving and support.</p>
+    </section>
+
+    <section>
+        <h2>Join Us on Our Journey</h2>
+        <p>As we continue to grow and evolve, we invite you to join us on our journey. Whether you are a user, partner, or simply someone who shares our passion for financial empowerment, we welcome you to be a part of our story. Together, we can create a future where financial planning is accessible to all.</p>
+        <p>Thank you for choosing FinPlanner. We are excited to help you achieve your financial goals and secure your future!</p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h4>About FinPlanner</h4>
+                <p>Empowering individuals with AI-driven financial planning tools for a secure and prosperous future.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Our Services</a></li>
+                    <li><a href="#">Financial Tools</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Financial Guides</a></li>
+                    <li><a href="faq.html">FAQs</a></li>
+                    <li><a href="#">Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Stay Updated</h4>
+                <p>Subscribe to our newsletter for financial tips and updates.</p>
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Enter your email">
+                    <button type="submit" class="newsletter-button">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 FinPlanner. All rights reserved.</p>
+            <p>
+                <a href="#">Privacy Policy</a> |
+                <a href="#">Terms of Service</a> |
+                <a href="#">Cookie Policy</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="home.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('section');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>

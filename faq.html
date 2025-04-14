@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinPlanner - FAQ</title>
+    <link rel="stylesheet" href="nav.css">
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #3182ce;
+            --text-light: #ffffff;
+            --text-dark: #2d3748;
+            --accent-color: #4299e1;
+            --light-blue: #ebf8ff;
+            --border-color: #e2e8f0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-dark);
+            background-color: #f7fafc;
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 1rem 0;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 0.5rem;
+        }
+        
+        nav {
+            background-color: var(--primary-color);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-links {
+            display: flex;
+        }
+        
+        .nav-item {
+            position: relative;
+            margin-left: 1.5rem;
+        }
+        
+        .nav-link {
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-link i {
+            margin-left: 0.25rem;
+        }
+        
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: var(--primary-color);
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+            display: none;
+        }
+        
+        .nav-item:hover .dropdown {
+            display: block;
+        }
+        
+        .dropdown-link {
+            color: var(--text-light);
+            padding: 0.75rem 1rem;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .dropdown-link:hover {
+            background-color: var(--accent-color);
+        }
+        
+        /* FAQ Styles */
+        h1 {
+            color: var(--primary-color);
+            margin: 2rem 0;
+            text-align: center;
+            font-size: 2.2rem;
+        }
+        
+        .faq-container {
+            margin-bottom: 3rem;
+        }
+        
+        .search-container {
+            margin-bottom: 2rem;
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .faq-section {
+            margin-bottom: 2.5rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 1.5rem;
+        }
+        
+        .faq-section h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+        }
+        
+        .faq-item {
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+        
+        .faq-question {
+            font-weight: bold;
+            cursor: pointer;
+            padding: 0.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--accent-color);
+        }
+        
+        .faq-item.active .faq-question::after {
+            content: '-';
+        }
+        
+        .faq-answer {
+            padding-top: 0.5rem;
+            display: none;
+        }
+        
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+        
+        /* Community Q&A Styles */
+        .user-qa-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 1.5rem;
+        }
+        
+        .user-qa-heading {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        .ask-question-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 1rem 0;
+            transition: background-color 0.3s;
+        }
+        
+        .ask-question-btn:hover {
+            background-color: var(--accent-color);
+        }
+        
+        .question-form {
+            background-color: var(--light-blue);
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+            display: none;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        
+        .form-group input, 
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+        }
+        
+        .form-group textarea {
+            min-height: 120px;
+        }
+        
+        .btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-right: 0.5rem;
+        }
+        
+        .btn-secondary {
+            background-color: #718096;
+        }
+        
+        .community-questions {
+            margin-top: 2rem;
+        }
+        
+        .community-question {
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+        
+        .question-header {
+            background-color: var(--light-blue);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .question-header h3 {
+            margin: 0;
+            color: var(--primary-color);
+        }
+        
+        .question-status {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        .question-content {
+            padding: 1rem;
+            background-color: white;
+        }
+        
+        .question-meta {
+            font-size: 0.8rem;
+            color: #718096;
+            margin-top: 0.5rem;
+        }
+        
+        .answers-container {
+            padding: 1rem;
+            background-color: #f8fafc;
+        }
+        
+        .answer {
+            background-color: white;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            border-left: 3px solid var(--accent-color);
+        }
+        
+        .answer-meta {
+            font-size: 0.8rem;
+            color: #718096;
+            margin-top: 0.5rem;
+        }
+        
+        .add-answer {
+            margin-top: 1rem;
+        }
+        
+        .answer-form {
+            background-color: var(--light-blue);
+            padding: 1rem;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        /* Footer Styles */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .footer-info {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-info p {
+            margin-top: 0.5rem;
+            opacity: 0.8;
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            flex: 2;
+            justify-content: space-around;
+        }
+        
+        .footer-links h4 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+        
+        .social {
+            min-width: 180px;
+        }
+        
+        .social h4 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-icons a {
+            color: var(--text-light);
+            font-size: 1.25rem;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        
+        .social-icons a:hover {
+            opacity: 1;
+        }
+        
+        .copyright {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.875rem;
+            opacity: 0.8;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 1.5rem;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .footer-content {
+                flex-direction: column;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <!-- Navigation Bar -->
+            <nav>
+                <div class="nav-container">
+                    <a href="#" class="logo">
+                        <i class="fas fa-chart-line"></i>
+                        FinPlanner
+                    </a>
+                    <div class="nav-links">
+                        <div class="nav-item">
+                            <a href="#" class="nav-link">
+                                Services
+                                <i class="fas fa-chevron-down"></i>
+                            </a>
+                            <div class="dropdown">
+                                <a href="personal_planning.html" class="dropdown-link">Personal Planning</a>
+                                <a href="investment.css" class="dropdown-link">Investment Advice</a>
+                                <a href="retire3.html" class="dropdown-link">Retirement Planning</a>
+                                <a href="#" class="dropdown-link">Tax Optimization</a>
+                            </div>
+                        </div>
+                        <div class="nav-item">
+                            <a href="#" class="nav-link">
+                                Tools
+                                <i class="fas fa-chevron-down"></i>
+                            </a>
+                            <div class="dropdown">
+                                <a href="#" class="dropdown-link">ROI Calculator</a>
+                                <a href="#" class="dropdown-link">Budget Planner</a>
+                                <a href="#" class="dropdown-link">Goal Simulator</a>
+                            </div>
+                        </div>
+                        <div class="nav-item">
+                            <a href="#" class="nav-link">About</a>
+                        </div>
+                        <div class="nav-item">
+                            <a href="contact.html" class="nav-link">Contact</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <h1>Frequently Asked Questions</h1>
+        
+        <div class="faq-container">
+            <div class="search-container">
+                <input type="text" class="search-box" id="faq-search" placeholder="Search for questions...">
+            </div>
+            
+            <div class="faq-section">
+                <h2>General Questions</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">What is FinPlanner?</div>
+                    <div class="faq-answer">
+                        <p>FinPlanner is a comprehensive financial management platform designed to help individuals and businesses optimize their cash flow, track investments, and make informed financial decisions. Our suite of tools includes budgeting, investment tracking, ROI calculators, and financial forecasting.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Is FinPlanner suitable for personal or business use?</div>
+                    <div class="faq-answer">
+                        <p>FinPlanner is designed for both personal and business use. We offer different plans tailored to individual needs, small businesses, and enterprise solutions. Each plan includes features specific to the financial management needs of these different user types.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How secure is my financial data on FinPlanner?</div>
+                    <div class="faq-answer">
+                        <p>Security is our top priority at FinPlanner. We implement bank-level encryption (256-bit SSL), two-factor authentication, and regular security audits. Your data is stored in secure, redundant servers, and we never share your information with third parties without your explicit consent. Additionally, we are compliant with all major financial data protection regulations.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="faq-section">
+                <h2>Account & Pricing</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How much does FinPlanner cost?</div>
+                    <div class="faq-answer">
+                        <p>FinPlanner offers several pricing tiers:</p>
+                        <ul>
+                            <li><strong>Free Plan:</strong> Basic features with limited functionality, perfect for getting started</li>
+                            <li><strong>Personal Plan:</strong> $9.99/month with full personal finance tools</li>
+                            <li><strong>Business Plan:</strong> $24.99/month with advanced business features and reporting</li>
+                            <li><strong>Enterprise Plan:</strong> Custom pricing based on organization size and needs</li>
+                        </ul>
+                        <p>All paid plans come with a 14-day free trial. Annual subscriptions receive a 20% discount.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Can I cancel my subscription at any time?</div>
+                    <div class="faq-answer">
+                        <p>Yes, you can cancel your subscription at any time from your account settings. If you cancel, you'll continue to have access to your paid features until the end of your current billing cycle. We don't offer refunds for partial months, but you can downgrade to our free plan and continue using basic features without charge.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How do I get started with FinPlanner?</div>
+                    <div class="faq-answer">
+                        <p>Getting started with FinPlanner is simple:</p>
+                        <ol>
+                            <li>Create an account on our website</li>
+                            <li>Choose your subscription plan (or start with our free tier)</li>
+                            <li>Link your financial accounts (optional but recommended)</li>
+                            <li>Set up your budget and financial goals</li>
+                            <li>Explore our tools and features like the ROI calculator</li>
+                        </ol>
+                        <p>We also offer guided onboarding and personalized demos for business and enterprise customers.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="faq-section">
+                <h2>Features & Tools</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">What is the ROI Calculator and how does it work?</div>
+                    <div class="faq-answer">
+                        <p>The ROI (Return on Investment) Calculator is a powerful tool that helps you evaluate the potential return on your investments. You input your initial investment amount, expected annual revenue, annual costs, and investment timeframe. The calculator then provides you with total return, net profit, ROI percentage, and payback period.</p>
+                        <p>This tool is particularly useful for business planning, comparing investment opportunities, and setting realistic financial goals. While it provides estimates based on your inputs, actual returns may vary based on market conditions and other factors.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Can FinPlanner connect to my bank accounts?</div>
+                    <div class="faq-answer">
+                        <p>Yes, FinPlanner can securely connect to over 10,000 financial institutions worldwide. This includes banks, credit cards, investment accounts, and loan providers. Our read-only connections ensure that your accounts remain secure, and you can manage which accounts are connected at any time through your dashboard.</p>
+                        <p>This integration allows for automatic transaction tracking, real-time balance updates, and comprehensive financial reporting without manual data entry.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Does FinPlanner offer financial advice?</div>
+                    <div class="faq-answer">
+                        <p>FinPlanner provides financial insights and analytics based on your data, but we do not offer personalized financial advice. Our tools can help identify trends, opportunities, and potential issues in your finances, but for specific investment or tax advice, we recommend consulting with a qualified financial advisor.</p>
+                        <p>Business and Enterprise plans do include access to our financial analyst team for general guidance and tool optimization.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="user-qa-container">
+            <h2 class="user-qa-heading">Community Q&A</h2>
+            <p>Can't find the answer you're looking for? Ask the community or help others by answering their questions.</p>
+            
+            <button class="ask-question-btn" id="ask-question-btn">Ask a Question</button>
+            
+            <div class="question-form" id="question-form">
+                <div class="form-group">
+                    <label for="question-title">Question Title</label>
+                    <input type="text" id="question-title" placeholder="Enter a concise title for your question">
+                </div>
+                
+                <div class="form-group">
+                    <label for="question-details">Question Details</label>
+                    <textarea id="question-details" placeholder="Provide more details about your question..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="user-name">Your Name (optional)</label>
+                    <input type="text" id="user-name" placeholder="Enter your name or username">
+                </div>
+                
+                <button class="btn" id="submit-question-btn">Submit Question</button>
+                <button class="btn btn-secondary" id="cancel-question-btn">Cancel</button>
+            </div>
+            
+            <div class="community-questions" id="community-questions">
+                <div class="community-question">
+                    <div class="question-header">
+                        <h3>How do I export my ROI calculations?</h3>
+                        <span class="question-status">2 answers</span>
+                    </div>
+                    <div class="question-content">
+                        <p>I've created several investment scenarios using the ROI calculator, but I need to present these to my team. Is there a way to export or share these calculations?</p>
+                        <div class="question-meta">Asked by Sarah T. on March 5, 2025</div>
+                    </div>
+                    <div class="answers-container">
+                        <div class="answer">
+                            <p>Yes, you can export your ROI calculations by clicking the three dots menu in the top-right corner of the results panel. From there, select "Export" and choose your preferred format (PDF, Excel, or CSV).</p>
+                            <div class="answer-meta">Answered by FinPlanner Support on March 5, 2025</div>
+                        </div>
+                        <div class="answer">
+                            <p>Adding to the above answer - you can also share a direct link to your calculation if you save it to your account first. Just click "Save Calculation" and then use the "Share" button that appears.</p>
+                            <div class="answer-meta">Answered by Michael P. on March 7, 2025</div>
+                        </div>
+                        <div class="add-answer">
+                            <button class="btn" id="add-answer-btn-1">Add Your Answer</button>
+                            <div class="answer-form" id="answer-form-1">
+                                <textarea placeholder="Type your answer here..."></textarea>
+                                <div class="form-group">
+                                    <label for="answer-name-1">Your Name (optional)</label>
+                                    <input type="text" id="answer-name-1" placeholder="Enter your name or username">
+                                </div>
+                                <button class="btn">Submit Answer</button>
+                                <button class="btn btn-secondary cancel-answer-btn">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="community-question">
+                    <div class="question-header">
+                        <h3>Can FinPlanner track cryptocurrency investments?</h3>
+                        <span class="question-status">1 answer</span>
+                    </div>
+                    <div class="question-content">
+                        <p>I have investments in several cryptocurrencies. Can FinPlanner track these alongside my traditional investments, and does the ROI calculator work with crypto assets?</p>
+                        <div class="question-meta">Asked by Crypto_Investor on March 8, 2025</div>
+                    </div>
+                    <div class="answers-container">
+                        <div class="answer">
+                            <p>FinPlanner's Business and Enterprise plans support cryptocurrency tracking for major coins like Bitcoin, Ethereum, and about 50 others. The ROI calculator can be used for any investment type, including crypto, but you'll need to manually input the values. For automated tracking, you can connect compatible cryptocurrency exchanges or wallets through the Accounts section.</p>
+                            <div class="answer-meta">Answered by FinPlanner Support on March 9, 2025</div>
+                        </div>
+                        <div class="add-answer">
+                            <button class="btn" id="add-answer-btn-2">Add Your Answer</button>
+                            <div class="answer-form" id="answer-form-2">
+                                <textarea placeholder="Type your answer here..."></textarea>
+                                <div class="form-group">
+                                    <label for="answer-name-2">Your Name (optional)</label>
+                                    <input type="text" id="answer-name-2" placeholder="Enter your name or username">
+                                </div>
+                                <button class="btn">Submit Answer</button>
+                                <button class="btn btn-secondary cancel-answer-btn">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <a href="#" class="logo">
+                        <i class="fas fa-chart-line"></i>
+                        FinPlanner
+                    </a>
+                    <p>Smart Financial Planning Powered by AI</p>
+                </div>
+                <div class="footer-links">
+                    <div>
+                        <h4>Company</h4>
+                        <ul>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Careers</a></li>
+                            <li><a href="#">Press</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Help Center</a></li>
+                            <li><a href="faq.html">FAQ</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Legal</h4>
+                        <ul>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                            <li><a href="#">Security</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="social">
+                    <h4>Connect With Us</h4>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2025 FinPlanner. All rights reserved. Take control of your financial future.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Add Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    
+    <script>
+        // Toggle FAQs
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+        
+        // Search functionality
+        document.getElementById('faq-search').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            
+            document.querySelectorAll('.faq-item').forEach(item => {
+                const question = item.querySelector('.faq-question').textContent.toLowerCase();
+                const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+                
+                if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            
+            document.querySelectorAll('.faq-section').forEach(section => {
+                const visibleItems = Array.from(section.querySelectorAll('.faq-item')).filter(item => {
+                    return item.style.display !== 'none';
+                });
+                
+                if (visibleItems.length === 0) {
+                    section.style.display = 'none';
+                } else {
+                    section.style.display = 'block';
+                }
+            });
+        });
+        
+        // Ask Question functionality
+        document.getElementById('ask-question-btn').addEventListener('click', function() {
+            document.getElementById('question-form').style.display = 'block';
+            this.style.display = 'none';
+        });
+        
+        document.getElementById('cancel-question-btn').addEventListener('click', function() {
+            document.getElementById('question-form').style.display = 'none';
+            document.getElementById('ask-question-btn').style.display = 'inline-block';
+        });
+        
+        document.getElementById('submit-question-btn').addEventListener('click', function() {
+            const title = document.getElementById('question-title').value;
+            const details = document.getElementById('question-details').value;
+            const userName = document.getElementById('user-name').value || 'Anonymous';
+            
+            if (title.trim() === '' || details.trim() === '') {
+                alert('Please fill in both the question title and details.');
+                return;
+            }
+            
+            // Create new question
+            const now = new Date();
+            const formattedDate = now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            
+            const questionHTML = `
+                <div class="community-question">
+                    <div class="question-header">
+                        <h3>${title}</h3>
+                        <span class="question-status">0 answers</span>
+                    </div>
+                    <div class="question-content">
+                        <p>${details}</p>
+                        <div class="question-meta">Asked by ${userName} on ${formattedDate}</div>
+                    </div>
+                    <div class="answers-container">
+                        <div class="add-answer">
+                            <button class="btn add-answer-btn">Add Your Answer</button>

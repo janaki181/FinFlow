@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Planning - FinPlanner</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Base styles */
+        :root {
+            --primary-color: #3182ce;
+            --secondary-color: #2d3748;
+            --accent-color: #63b3ed;
+            --light-color: #f7fafc;
+            --dark-color: #1a202c;
+            --text-color: #4a5568;
+            --border-color: #e2e8f0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f8fafc;
+        }
+        
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            height: 70px;
+        }
+        
+        .logo {
+            font-weight: 700;
+            font-size: 24px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-item {
+            position: relative;
+        }
+        
+        .nav-link {
+            color: var(--secondary-color);
+            font-weight: 500;
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .nav-item:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .dropdown-link {
+            display: block;
+            padding: 12px 20px;
+            transition: background 0.3s;
+        }
+        
+        .dropdown-link:hover {
+            background-color: #f8fafc;
+        }
+        
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+        }
+        
+        /* Hero section */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .page-header p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        /* Content sections */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .section {
+            margin-bottom: 60px;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .section-header h2 {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+        
+        .section-header p {
+            color: var(--text-color);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Feature cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .card h3 {
+            font-size: 1.3rem;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+        
+        /* Tool sections */
+        .tool-section {
+            background-color: #f1f5f9;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .tool-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .tool-icon {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            background: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tool-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .tool-demo {
+            flex: 1;
+            min-width: 280px;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .tool-info {
+            flex: 1;
+            min-width: 280px;
+        }
+        
+        .tool-info ul {
+            list-style-type: none;
+            padding-left: 5px;
+        }
+        
+        .tool-info li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .tool-info i {
+            color: var(--primary-color);
+            margin-top: 5px;
+        }
+        
+        /* Call to action */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 60px;
+        }
+        
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta-section p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+        
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .button-primary {
+            background: white;
+            color: var(--primary-color);
+        }
+        
+        .button-primary:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-3px);
+        }
+        
+        .button-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            margin-left: 15px;
+        }
+        
+        .button-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        /* Footer styles */
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 60px 20px 20px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-section h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #cbd5e0;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-link {
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            margin-top: 15px;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            padding: 10px 15px;
+            border-radius: 4px 0 0 4px;
+            border: none;
+            outline: none;
+        }
+        
+        .newsletter-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .newsletter-button:hover {
+            background-color: #2c5282;
+        }
+        
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 40px auto 0;
+            padding-top: 20px;
+            border-top: 1px solid #4a5568;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        
+        /* Progress bar and chart styles */
+        .progress-container {
+            width: 100%;
+            background-color: #e2e8f0;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            border-radius: 10px;
+            background: var(--primary-color);
+        }
+        
+        .chart-container {
+            width: 100%;
+            height: 200px;
+            margin: 20px 0;
+        }
+        
+        /* Form styles */
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: inherit;
+        }
+        
+        .form-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .form-button:hover {
+            background-color: #2c5282;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                flex-direction: column;
+                background: white;
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                gap: 15px;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .dropdown {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                margin: 10px 0 10px 20px;
+                display: none;
+            }
+            
+            .nav-item.active .dropdown {
+                display: block;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .tool-content {
+                flex-direction: column;
+            }
+            
+            .footer-bottom {
+                text-align: center;
+                justify-content: center;
+            }
+        }
+
+        /* Goal tracker styles */
+        .goal-tracker {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .goal-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .goal-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .goal-icon {
+            width: 40px;
+            height: 40px;
+            background: #ebf4ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .goal-details {
+            flex-grow: 1;
+        }
+
+        .goal-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .goal-stats {
+            display: flex;
+            color: var(--text-color);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .goal-stat {
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .goal-stat i {
+            margin-right: 5px;
+            color: var(--primary-color);
+        }
+
+        /* Timeline styles */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 3px;
+            background-color: #e2e8f0;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1.5px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            left: 0;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            text-align: left;
+        }
+
+        .timeline-content {
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .timeline-content::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            right: -40px;
+            transform: translateY(-50%);
+            background-color: white;
+            border: 4px solid var(--primary-color);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::after {
+            left: -40px;
+            right: auto;
+        }
+
+        @media (max-width: 768px) {
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+                text-align: left;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline-content::after {
+                left: -40px;
+                right: auto;
+            }
+        }
+
+        /* Stats section */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .stat-item h3 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .stat-item p {
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-container">
+            <a href="home.html" class="logo">
+                <i class="fas fa-chart-line"></i>
+                FinPlanner
+            </a>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="nav-links">
+                <div class="nav-item">
+                    <a href="#" class="nav-link">
+                        Services
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="dropdown">
+                        <a href="persona_planning.html" class="dropdown-link" style="color: #2d3748;">Personal Planning</a>
+                        <a href="#" class="dropdown-link" style="color: #2d3748;">Investment Advice</a>
+                        <a href="retire3.html" class="dropdown-link" style="color: #2d3748;">Retirement Planning</a>
+                        <a href="#" class="dropdown-link" style="color: #2d3748;">Tax Optimization</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link">
+                        Tools
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="dropdown">
+                        <a href="roicalc.html" class="dropdown-link" style="color: #2d3748;">ROI Calculator</a>
+                        <a href="#" class="dropdown-link" style="color: #2d3748;">Budget Planner</a>
+                        <a href="#" class="dropdown-link" style="color: #2d3748;">Goal Simulator</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link">About</a>
+                </div>
+                <div class="nav-item">
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <h1>Personal Planning</h1>
+        <p>Take control of your life with holistic planning tools that integrate financial, career, health, and personal growth into one comprehensive strategy.</p>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Goal Setting Section -->
+        <section class="section" id="goal-setting">
+            <div class="section-header">
+                <h2>Goal Setting</h2>
+                <p>Define clear, achievable goals across all aspects of your life and track your progress over time.</p>
+            </div>
+
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>SMART Goals Framework</h3>
+                    <p>Set Specific, Measurable, Achievable, Relevant, and Time-bound goals that provide clear direction and motivation.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3>Life Balance Assessment</h3>
+                    <p>Evaluate and optimize the balance between various life domains including career, finances, relationships, and personal growth.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <h3>Progress Tracking</h3>
+                    <p>Monitor your advancement with visual dashboards and receive AI-driven insights to keep you on track.</p>
+                </div>
+            </div>
+
+            <div class="tool-section">
+                <div class="tool-header">
+                    <div class="tool-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div>
+                        <h3>Goal Tracker</h3>
+                        <p>Track progress across multiple life goals in one consolidated dashboard</p>
+                    </div>
+                </div>
+                <div class="tool-content">
+                    <div class="tool-demo">
+                        <div class="goal-tracker">
+                            <div class="goal-item">
+                                <div class="goal-icon">
+                                    <i class="fas fa-dollar-sign"></i>
+                                </div>
+                                <div class="goal-details">
+                                    <div class="goal-title">
+                                        <span>Emergency Fund</span>
+                                        <span>65%</span>
+                                    </div>
+                                    <div class="progress-container">
+                                        <div class="progress-bar" style="width: 65%"></div>
+                                    </div>
+                                    <div class="goal-stats">
+                                        <div class="goal-stat">
+                                            <i class="fas fa-calendar-alt"></i>
+                                            <span>2 months left</span>
+                                        </div>
+                                        <div class="goal-stat">
+                                            <i class="fas fa-chart-line"></i>
+                                            <span>On track</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="goal-item">
+                                <div class="goal-icon">
+                                    <i class="fas fa-graduation-cap"></i>
+                                </div>
+                                <div class="goal-details">
+                                    <div class="goal-title">
+                                        <span>Professional Certification</span>
+                                        <span>40%</span>
+                                    </div>
+                                    <div class="progress-container">
+                                        <div class="progress-bar" style="width: 40%"></div>
+                                    </div>
+                                    <div class="goal-stats">
+                                        <div class="goal-stat">
+                                            <i class="fas fa-calendar-alt"></i>
+                                            <span>4 months left</span>
+                                        </div>
+                                        <div class="goal-stat">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            <span>Falling behind</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="goal-item">
+                                <div class="goal-icon">
+                                    <i class="fas fa-heartbeat"></i>
+                                </div>
+                                <div class="goal-details">
+                                    <div class="goal-title">
+                                        <span>Fitness Goal</span>
+                                        <span>80%</span>
+                                    </div>
+                                    <div class="progress-container">
+                                        <div class="progress-bar" style="width: 80%"></div>
+                                    </div>
+                                    <div class="goal-stats">
+                                        <div class="goal-stat">
+                                            <i class="fas fa-calendar-alt"></i>
+                                            <span>3 weeks left</span>
+                                        </div>
+                                        <div class="goal-stat">
+                                            <i class="fas fa-trophy"></i>
+                                            <span>Ahead of schedule</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tool-info">
+                        <h4>Features:</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Track multiple goals across different life domains</li>
+                            <li><i class="fas fa-check"></i> Visualize progress with interactive charts</li>
+                            <li><i class="fas fa-check"></i> Set milestones and celebrate achievements</li>
+                            <li><i class="fas fa-check"></i> Receive AI-powered recommendations to improve progress</li>
+                            <li><i class="fas fa-check"></i> Adjust goals and timelines as needed</li>
+                        </ul>
+                        <a href="#" class="button form-button" style="margin-top: 20px">Try Goal Tracker</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Financial Planning Section -->
+        <section class="section" id="financial-planning">
+            <div class="section-header">
+                <h2>Financial Planning</h2>
+                <p>Build a solid financial foundation with personalized strategies for budgeting, saving, investing, and debt management.</p>
+            </div>
+
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <h3>Budget Optimization</h3>
+                    <p>Create and optimize your budget based on your income, expenses, and financial goals with AI-driven insights.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-piggy-bank"></i>
+                    </div>
+                    <h3>Savings Strategy</h3>
+                    <p>Develop a personalized savings plan with automated recommendations for emergency funds, major purchases, and long-term goals.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <h3>Investment Planning</h3>
+                    <p>Build an investment portfolio aligned with your risk tolerance, time horizon, and financial objectives.</p>
+                </div>
+            </div>
+
+            <div class="tool-section">
+                <div class="tool-header">
+                    <div class="tool-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <div>
+                        <h3>Budget Analyzer</h3>
+                        <p>Visualize your spending patterns and identify opportunities to save</p>
+                    </div>
+                </div>
+                <div class="tool-content">
+                    <div class="tool-demo">
+                        <div class="chart-container">
+                            <svg width="100%" height="100%" viewBox="0 0 400 200">
+                                <!-- Simple pie chart -->
+                                <circle cx="100" cy="100" r="80" fill="#f0f0f0" />
+                                <path d="M 100 100 L 100 20 A 80 80 0 0 1 169 52 Z" fill="#3182ce" />
+                                <path d="M 100 100 L 169 52 A 80 80 0 0 1 180 100 Z" fill="#63b3ed" />
+                                <path d="M 100 100 L 180 100 A 80 80 0 0 1 100 180 Z" fill="#90cdf4" />
+                                <path d="M 100 100 L 100 180 A 80 80 0 0 1 20 100 Z" fill="#bee3f8" />
+                                <path d="M 100 100 L 20 100 A 80 80 0 0 1 100 20 Z" fill="#ebf8ff" />
+                                
+                                <!-- Legend -->
+                                <rect

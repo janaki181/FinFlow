@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - FinPlanner</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="home.css">
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            color: #2d3748;
+            background: linear-gradient(45deg, #f6f8fa, #e8eef1);
+            background-size: 200% 200%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        header.contact-header {
+            background: linear-gradient(135deg, #1a365d 0%, #2b4c7e 100%);
+            color: white;
+            padding: 8rem 0 2.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header.contact-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('/api/placeholder/800/400') center/cover;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .contact-title {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        section {
+            padding: 3rem;
+            margin: 2rem auto;
+            max-width: 900px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            animation: fadeIn 0.6s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        section:nth-child(even) {
+            background: linear-gradient(to right, #ffffff, #f8fafc);
+        }
+
+        h2 {
+            color: #1a365d;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(to right, #3182ce, #63b3ed);
+            border-radius: 2px;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: #4a5568;
+        }
+
+        .contact-form {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #2b4c7e;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 0.75rem;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #3182ce;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .submit-button {
+            padding: 1rem 2rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .submit-button:hover {
+            background: var(--secondary);
+        }
+
+        .contact-info {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .contact-info-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-info-item i {
+            font-size: 1.5rem;
+            color: #3182ce;
+        }
+
+        .contact-info-item p {
+            margin: 0;
+        }
+
+        .faq-section {
+            margin-top: 2rem;
+        }
+
+        .faq-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .faq-item h3 {
+            color: #2b4c7e;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .faq-item p {
+            margin: 0;
+            color: #4a5568;
+        }
+
+        @media (max-width: 768px) {
+            section {
+                padding: 2rem;
+                margin: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-chart-line"></i>
+                FinPlanner
+            </a>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="nav-links">
+                <div class="nav-item">
+                    <a href="#" class="nav-link">
+                        Services
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="dropdown">
+                        <a href="persona_planning.html" class="dropdown-link" style="color: #2d3748;">Personal Planning</a>
+                        <a href="investment.html" class="dropdown-link"style="color: #2d3748;">Investment Advice</a>
+                        <a href="retire3.html" class="dropdown-link"style="color: #2d3748;">Retirement Planning</a>
+                        <a href="#" class="dropdown-link"style="color: #2d3748;">Tax Optimization</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link">
+                        Tools
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="dropdown">
+                        <a href="roicalc.html" class="dropdown-link"style="color: #2d3748;">ROI Calculator</a>
+                        <a href="#" class="dropdown-link"style="color: #2d3748;">Budget Planner</a>
+                        <a href="#" class="dropdown-link"style="color: #2d3748;">Goal Simulator</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="learn.html" class="nav-link">About</a>
+                </div>
+                <div class="nav-item">
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contact Header -->
+    <header class="contact-header">
+        <h1 class="contact-title">Contact Us</h1>
+    </header>
+
+    <!-- Contact Form Section -->
+    <section>
+        <h2>Get in Touch</h2>
+        <p>We'd love to hear from you! Whether you have a question about our services, need assistance, or just want to say hello, feel free to reach out.</p>
+        <form class="contact-form">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" placeholder="Enter your message" required></textarea>
+            </div>
+            <button type="submit" class="submit-button">Send Message</button>
+        </form>
+    </section>
+
+    <!-- Contact Information Section -->
+    <section>
+        <h2>Our Office</h2>
+        <div class="contact-info">
+            <div class="contact-info-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <p>
+                    FinPlanner Pvt. Ltd.<br>
+                    456 Business Avenue,<br>
+                    Ahmedabad, Gujarat - 380015,<br>
+                    India
+                </p>
+            </div>
+            <div class="contact-info-item">
+                <i class="fas fa-phone"></i>
+                <p>+91 79 9876 5432</p>
+            </div>
+            <div class="contact-info-item">
+                <i class="fas fa-envelope"></i>
+                <p>info@finplanner.com</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section>
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-section">
+            <div class="faq-item">
+                <h3>How can I get started with FinPlanner?</h3>
+                <p>You can get started by signing up for a free account on our platform. Once registered, you can explore our tools and services to begin your financial planning journey.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Is my financial data secure?</h3>
+                <p>Yes, we use bank-level encryption and security measures to ensure your data is safe and protected at all times.</p>
+            </div>
+            <div class="faq-item">
+                <h3>What kind of support do you offer?</h3>
+                <p>We offer 24/7 customer support via email and phone. Our team is always ready to assist you with any questions or issues.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Can I cancel my subscription anytime?</h3>
+                <p>Yes, you can cancel your subscription at any time without any hidden fees or penalties.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Support Section -->
+    <section>
+        <h2>Customer Support</h2>
+        <p>Our customer support team is available 24/7 to assist you with any questions or concerns. You can reach us via:</p>
+        <div class="contact-info">
+            <div class="contact-info-item">
+                <i class="fas fa-phone"></i>
+                <p>+91 79 9876 5432</p>
+            </div>
+            <div class="contact-info-item">
+                <i class="fas fa-envelope"></i>
+                <p>support@finplanner.com</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h4>About FinPlanner</h4>
+                <p>Empowering individuals with AI-driven financial planning tools for a secure and prosperous future.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="learn.html">About Us</a></li>
+                    <li><a href="#">Our Services</a></li>
+                    <li><a href="#">Financial Tools</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Financial Guides</a></li>
+                    <li><a href="faq.html">FAQs</a></li>
+                    <li><a href="#">Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Stay Updated</h4>
+                <p>Subscribe to our newsletter for financial tips and updates.</p>
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Enter your email">
+                    <button type="submit" class="newsletter-button">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 FinPlanner. All rights reserved.</p>
+            <p>
+                <a href="#">Privacy Policy</a> |
+                <a href="#">Terms of Service</a> |
+                <a href="#">Cookie Policy</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="home.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('section');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Celebrating Your Retirement - FinPlanner</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a365d;
+            --secondary: #2b4c7e;
+            --accent: #3182ce;
+            --light: #ebf8ff;
+            --dark: #2d3748;
+            --success: #48bb78;
+            --warning: #ed8936;
+            --danger: #e53e3e;
+            --gray-100: #f7fafc;
+            --gray-200: #edf2f7;
+            --gray-300: #e2e8f0;
+            --gray-400: #cbd5e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            background: transparent;
+            padding: 1.5rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: var(--primary);
+            padding: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+            display: inline-block;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-link:hover {
+            color: var(--accent);
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            min-width: 200px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-link {
+            color: var(--dark);
+            text-decoration: none;
+            padding: 0.5rem;
+            display: block;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-link:hover {
+            background: var(--light);
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .menu-toggle {
+            display: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section for Retirement */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 6rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: url('/api/placeholder/1200/800') center/cover;
+            opacity: 0.1;
+            animation: rotate 60s linear infinite;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            color: white;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .retiree-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 2rem;
+            border: 5px solid white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        /* New Strategy Section */
+        .strategies {
+            padding: 6rem 2rem;
+            background: white;
+        }
+
+        .strategies-intro {
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            text-align: center;
+        }
+
+        .strategies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .strategy-card {
+            background: var(--light);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .strategy-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .strategy-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .strategy-content {
+            padding: 1.5rem;
+        }
+
+        .strategy-content h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .strategy-content p {
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+
+        .strategy-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .strategy-features li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .strategy-features i {
+            color: var(--success);
+            margin-top: 0.3rem;
+        }
+
+        .strategy-link {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--accent);
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .strategy-link:hover {
+            background: var(--secondary);
+        }
+
+        /* New Retirement Age Section */
+        .retirement-age {
+            padding: 6rem 2rem;
+            background: var(--gray-100);
+        }
+
+        .age-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .age-content h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+        }
+
+        .age-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .age-factors {
+            margin-bottom: 2rem;
+        }
+
+        .age-factor {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            gap: 1rem;
+        }
+
+        .age-factor-icon {
+            background: var(--accent);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .age-factor-content h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .age-chart {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            padding: 2rem;
+        }
+
+        .chart-title {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .interactive-chart {
+            width: 100%;
+            height: 300px;
+            background: var(--light);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-bar {
+            position: absolute;
+            bottom: 0;
+            width: 14%;
+            background: var(--accent);
+            transition: height 0.5s ease;
+        }
+
+        .chart-bar:nth-child(1) {
+            left: 7%;
+            height: 60%;
+            background: var(--primary);
+        }
+
+        .chart-bar:nth-child(2) {
+            left: 24%;
+            height: 75%;
+        }
+
+        .chart-bar:nth-child(3) {
+            left: 41%;
+            height: 90%;
+        }
+
+        .chart-bar:nth-child(4) {
+            left: 58%;
+            height: 70%;
+            background: var(--warning);
+        }
+
+        .chart-bar:nth-child(5) {
+            left: 75%;
+            height: 50%;
+            background: var(--danger);
+        }
+
+        .chart-labels {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 1rem;
+        }
+
+        .chart-label {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--dark);
+        }
+
+        /* New Retirement Schemes Section */
+        .schemes {
+            padding: 6rem 2rem;
+            background: white;
+        }
+
+        .scheme-tabs {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tab-buttons {
+            display: flex;
+            overflow-x: auto;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 0.5rem;
+        }
+
+        .tab-btn {
+            padding: 1rem 1.5rem;
+            background: var(--gray-200);
+            color: var(--dark);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .tab-btn.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .tab-content.active {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .scheme-details {
+            background: var(--light);
+            padding: 2rem;
+            border-radius: 12px;
+        }
+
+        .scheme-details h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .scheme-list {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .scheme-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .scheme-comparison {
+            background: white;
+            border: 1px solid var(--gray-300);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .comparison-header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            border-bottom: 1px solid var(--gray-300);
+        }
+
+        .comparison-cell {
+            padding: 1rem;
+            text-align: center;
+            border-right: 1px solid var(--gray-300);
+        }
+
+        .comparison-cell:last-child {
+            border-right: none;
+        }
+
+        .comparison-feature {
+            font-weight: bold;
+            background: var(--gray-100);
+        }
+
+        /* New Financial Planning Section */
+        .financial-planning {
+            padding: 6rem 2rem;
+            background: var(--light);
+        }
+
+        .planning-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .planning-calculator {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .calculator-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .input-group label {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .input-group input {
+            padding: 0.75rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 6px;
+        }
+
+        .calculator-result {
+            background: var(--gray-100);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            display: none;
+        }
+
+        .calculator-result.show {
+            display: block;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--gray-300);
+        }
+
+        .result-label {
+            font-weight: bold;
+        }
+
+        .planning-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .planning-step {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .planning-step:hover {
+            transform: translateY(-5px);
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1.5rem;
+        }
+
+        .planning-step h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        /* New Post-Retirement Management Section */
+        .post-retirement {
+            padding: 6rem 2rem;
+            background: white;
+        }
+
+        .management-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .management-card {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .management-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            color: white;
+        }
+
+        .card-header h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .header-health {
+            background: var(--success);
+        }
+
+        .header-wealth {
+            background: var(--accent);
+        }
+
+        .header-leisure {
+            background: var(--warning);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+            background: white;
+        }
+
+        .management-list {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .management-list li {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .management-list li::before {
+            content: "\2022";
+            color: var(--accent);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .resource-link {
+            display: block;
+            padding: 0.75rem;
+            background: var(--gray-100);
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            text-decoration: none;
+            color: var(--dark);
+            transition: all 0.3s ease;
+        }
+
+        .resource-link:hover {
+            background: var(--light);
+            transform: translateX(5px);
+        }
+
+        .resource-link i {
+            color: var(--accent);
+            margin-right: 0.5rem;
+        }
+
+        /* Achievements Section */
+        .achievements {
+            padding: 6rem 2rem;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: var(--dark);
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .achievement-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .achievement-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .achievement-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .achievement-card p {
+            color: var(--dark);
+            opacity: 0.8;
+        }
+
+        /* Timeline Section */
+        .timeline-section {
+            padding: 6rem 2rem;
+            background: var(--light);
+        }
+
+        .timeline-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: var(--accent);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 4px solid var(--accent);
+            border-radius: 50%;
+            top: 15px;
+            z-index: 1;
+        }
+
+        .timeline-left {
+            left: 0;
+            text-align: right;
+        }
+
+        .timeline-left::after {
+            right: -14px;
+        }
+
+        .timeline-right {
+            left: 50%;
+            text-align: left;
+        }
+
+        .timeline-right::after {
+            left: -14px;
+        }
+
+        .timeline-content {
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .timeline-content h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content .date {
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 6rem 2rem;
+            background: white;
+        }
+
+        .testimonials-slider {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonial-container {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .testimonial {
+            flex: 0 0 100%;
+            padding: 2rem;
+        }
+
+        .testimonial-content {
+            background: var(--light);
+            padding: 2rem;
+            border-radius: 12px;
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .testimonial-content::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            margin-left: -20px;
+            border-width: 20px 20px 0;
+            border-style: solid;
+            border-color: var(--light) transparent transparent;
+        }
+
+        .testimonial-content p {
+            font-style: italic;
+            font-size: 1.1rem;
+            color: var(--dark);
+            line-height: 1.7;
+        }
+
+        .testimonial-author {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .author-image {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+        }
+
+        .author-name {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .author-title {
+            color: var(--dark);
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .testimonial-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .control-btn {
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background: var(--accent);
+        }
+
+        /* Well Wishes Section */
+        .well-wishes {
+            padding: 6rem 2rem;
+            background: var(--gray-100);
+        }
+
+        .wishes-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .wish-form {
+            max-width: 600px;
+            margin: 0 auto 4rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .btn-submit {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background: var(--primary);
+        }
+
+        .wishes-wall {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .wish-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .wish-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .wish-message {
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .wish-author {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .wish-role {
+            font-size: 0.9rem;
+            color: var(--dark);
+            opacity: 0.8;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            padding: 6rem 2rem;
+            background: white;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            height: 250px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03);
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover .gallery-image {
+            transform: scale(1.1);
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 1rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: var(--gray-300);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            color: white;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px);
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .newsletter-input {
+            padding: 0.75rem;
+            border: none;
+            border-radius: 6px;
+            flex-grow: 1;
+        }
+
+        .newsletter-button {
+            padding: 0.75rem 1.5rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .newsletter-button:hover {
+            background: var(--secondary);
+        }
+        /* Media Queries for Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+            display: none;
+            }
+
+            .menu-toggle {
+            display: block;
+            }
+
+            .nav-links.active {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: var(--primary);
+            padding: 1rem;
+            }
+
+            .age-container {
+            grid-template-columns: 1fr;
+            }
+
+            .tab-content.active {
+            grid-template-columns: 1fr;
+            }
+
+            .timeline-item {
+            width: 100%;
+            text-align: center;
+            }
+
+            .timeline-left,
+            .timeline-right {
+            left: 0;
+            }
+
+            .timeline-left::after,
+            .timeline-right::after {
+            left: 50%;
+            margin-left: -10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+            font-size: 2.5rem;
+            }
+
+            .hero p {
+            font-size: 1rem;
+            }
+
+            .strategy-content h3 {
+            font-size: 1.1rem;
+            }
+
+            .age-content h2 {
+            font-size: 2rem;
+            }
+
+            .age-factor-content h4 {
+            font-size: 1.1rem;
+            }
+
+            .scheme-details h3 {
+            font-size: 1.3rem;
+            }
+
+            .planning-step h3 {
+            font-size: 1.3rem;
+            }
+
+            .achievement-card h3 {
+            font-size: 1.3rem;
+            }
+
+            .timeline-content h3 {
+            font-size: 1.3rem;
+            }
+        }
+        </style>
+    </head>
+    <body>
+        <!-- Navigation -->
+        <nav>
+            <div class="nav-container">
+                <a href="#" class="logo"><i class="fas fa-star"></i> FinPlanner</a>
+                <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+                <ul class="nav-links">
+                    <li class="nav-item"><a href="#" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">Services</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <img src="retiree.jpg" alt="Retiree" class="retiree-image">
+                <h1>Celebrating Your Retirement</h1>
+                <p>Join us in celebrating the remarkable journey and achievements of our esteemed retiree.</p>
+            </div>
+        </section>
+
+        <!-- Strategies Section -->
+        <section class="strategies">
+            <div class="strategies-intro">
+                <h2>Retirement Strategies</h2>
+                <p>Explore various strategies to make the most of your retirement years.</p>
+            </div>
+            <div class="strategies-grid">
+                <div class="strategy-card">
+                    <img src="strategy1.jpg" alt="Strategy 1" class="strategy-image">
+                    <div class="strategy-content">
+                        <h3>Investment Planning</h3>
+                        <p>Maximize your returns with smart investment strategies.</p>
+                        <ul class="strategy-features">
+                            <li><i class="fas fa-check"></i> Diversified Portfolio</li>
+                            <li><i class="fas fa-check"></i> Risk Management</li>
+                            <li><i class="fas fa-check"></i> Long-term Growth</li>
+                        </ul>
+                        <a href="#" class="strategy-link">Learn More</a>
+                    </div>
+                </div>
+                <div class="strategy-card">
+                    <img src="strategy2.jpg" alt="Strategy 2" class="strategy-image">
+                    <div class="strategy-content">
+                        <h3>Health & Wellness</h3>
+                        <p>Maintain a healthy lifestyle during your retirement.</p>
+                        <ul class="strategy-features">
+                            <li><i class="fas fa-check"></i> Regular Exercise</li>
+                            <li><i class="fas fa-check"></i> Balanced Diet</li>
+                            <li><i class="fas fa-check"></i> Mental Well-being</li>
+                        </ul>
+                        <a href="#" class="strategy-link">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Retirement Age Section -->
+        <section class="retirement-age">
+            <div class="age-container">
+                <div class="age-content">
+                    <h2>Determining Your Retirement Age</h2>
+                    <p>Factors to consider when deciding the right age to retire.</p>
+                    <div class="age-factors">
+                        <div class="age-factor">
+                            <div class="age-factor-icon"><i class="fas fa-dollar-sign"></i></div>
+                            <div class="age-factor-content">
+                                <h4>Financial Stability</h4>
+                                <p>Ensure you have sufficient savings and income sources.</p>
+                            </div>
+                        </div>
+                        <div class="age-factor">
+                            <div class="age-factor-icon"><i class="fas fa-heartbeat"></i></div>
+                            <div class="age-factor-content">
+                                <h4>Health Condition</h4>
+                                <p>Consider your physical and mental health status.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="age-chart">
+                    <h3 class="chart-title">Retirement Age Distribution</h3>
+                    <div class="interactive-chart">
+                        <div class="chart-bar"></div>
+                        <div class="chart-bar"></div>
+                        <div class="chart-bar"></div>
+                        <div class="chart-bar"></div>
+                        <div class="chart-bar"></div>
+                    </div>
+                    <div class="chart-labels">
+                        <div class="chart-label">55-60</div>
+                        <div class="chart-label">61-65</div>
+                        <div class="chart-label">66-70</div>
+                        <div class="chart-label">71-75</div>
+                        <div class="chart-label">76+</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="well-wishes" id="wishes">
+            <div class="section-title">
+                <h2>Share Your Well Wishes</h2>
+                <p>Add your personal message to Jessica as she embarks on her retirement journey</p>
+            </div>
+            <div class="wishes-container">
+                <div class="wish-form">
+                    <div class="form-group
+                    ">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" class="form-control" placeholder="Enter your name">
+                    </div>
+                    <div class="form-group
+                    ">
+                        <label for="message">Your Message</label>
+                        <textarea id="message" class="form-control" placeholder="Enter your message"></textarea>
+                    </div>
+                    <button class="btn-submit
+                    ">Submit</button>
+                </div>
+                <div class="wishes-wall">
+                    <div class="wish-card">
+                        <p class="wish-message">Thank you for your leadership and vision, Jessica. Your legacy will continue to inspire us for years to come.</p>
+                        <span class="wish-author">Michael Chen</span>
+                        <span class="wish-role">Chief Financial Officer</span>
+                    </div>
+                    <div class="wish-card">
+                        <p class="wish-message">Wishing you all the best in your retirement, Jessica. Your dedication to excellence has set the bar high for all of us.</p>
+                        <span class="wish-author">Sarah Johnson</span>
+                        <span class="wish-role">Director of Client Relations</span>
+                    </div>
+                    <div class="wish-card">
+                        <p class="wish-message">Congratulations on your retirement, Jessica. Your impact on our company and industry will be felt for years to come.</p>
+                        <span class="wish-author">Robert Williams</span>
+                        <span class="wish-role">Technology Innovation Lead</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>About Us</h4>
+                    <p>FinPlanner is dedicated to helping you achieve financial freedom and a fulfilling retirement.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Services</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Newsletter</h4>
+                    <form class="newsletter-form">
+                        <input type="email" class="newsletter-input" placeholder="Your email address">
+                        <button type="submit" class="newsletter-button">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <p style="text-align: center;">&copy; 2023 FinPlanner. All rights reserved.</p>
+        </footer>
+
+        <script>
+            // JavaScript for navigation scroll effect
+            window.addEventListener('scroll', function() {
+                const nav = document.querySelector('nav');
+                if (window.scrollY > 50) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
+                }
+            });
+
+            // JavaScript for menu toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            menuToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+        </script>
+    </body>
+    </html>

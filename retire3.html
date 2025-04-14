@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinPlanner - Retirement Planning</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="home.css">
+    <style>
+        /* Additional styles specific to retirement page */
+        .retirement-hero {
+            background: linear-gradient(135deg, #4a6fa8 0%, #1e3a8a 100%);
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .retirement-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .retirement-hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .retirement-nav {
+            background-color: #f8fafc;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .retirement-nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-wrap: wrap;
+        }
+
+        .retirement-nav li {
+            margin: 0 1rem;
+        }
+
+        .retirement-nav a {
+            color: #2d3748;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.3s;
+        }
+
+        .retirement-nav a:hover {
+            border-color: #4a6fa8;
+        }
+
+        .retirement-section {
+            padding: 4rem 2rem;
+        }
+
+        .retirement-section:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        .retirement-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .retirement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .retirement-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .retirement-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+        }
+
+        .retirement-card h3 {
+            color: #2d3748;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .retirement-card h3 i {
+            margin-right: 0.75rem;
+            color: #4a6fa8;
+        }
+
+        .retirement-icon {
+            font-size: 2.5rem;
+            color: #4a6fa8;
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-container {
+            height: 400px;
+            margin: 2rem 0;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+        }
+
+        .age-calculator {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin: 3rem 0;
+        }
+
+        .calculator-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #2d3748;
+        }
+
+        .input-group input, .input-group select {
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .calculator-result {
+            background-color: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-top: 1.5rem;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 3rem auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: #4a6fa8;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 4px solid #4a6fa8;
+            border-radius: 50%;
+            z-index: 1;
+            top: 15px;
+        }
+
+        .timeline-left {
+            left: 0;
+        }
+
+        .timeline-right {
+            left: 50%;
+        }
+
+        .timeline-left::after {
+            right: -10px;
+        }
+
+        .timeline-right::after {
+            left: -10px;
+        }
+
+        .timeline-content {
+            padding: 20px 30px;
+            background-color: white;
+            position: relative;
+            border-radius: 6px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .faq-section {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .faq-question {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+
+        .faq-question:hover {
+            background-color: #f1f5f9;
+        }
+
+        .faq-question h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: #2d3748;
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 1.5rem;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .retirement-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-right {
+                left: 0;
+            }
+            
+            .timeline-left::after, .timeline-right::after {
+                left: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+        <!-- Navigation Bar -->
+        <nav>
+            <div class="nav-container">
+                <a href="#" class="logo">
+                    <i class="fas fa-chart-line"></i>
+                    FinPlanner
+                </a>
+                <div class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <div class="nav-links">
+                    <div class="nav-item">
+                        <a href="#" class="nav-link">
+                            Services
+                            <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <div class="dropdown">
+                            <a href="persona_planning.html" class="dropdown-link">Personal Planning</a>
+                            <a href="investment.html" class="dropdown-link">Investment Advice</a>
+                            <a href="retire3.html" class="dropdown-link">Retirement Planning</a>
+                            <a href="#" class="dropdown-link">Tax Optimization</a>
+                        </div>
+                    </div>
+                    <div class="nav-item">
+                        <a href="#" class="nav-link">
+                            Tools
+                            <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <div class="dropdown">
+                            <a href="roicalc.html" class="dropdown-link">ROI Calculator</a>
+                            <a href="#" class="dropdown-link">Budget Planner</a>
+                            <a href="#" class="dropdown-link">Goal Simulator</a>
+                        </div>
+                    </div>
+                    <div class="nav-item">
+                        <a href="#" class="nav-link">About</a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="contact.html" class="nav-link">Contact</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+    <!-- Retirement Hero Section -->
+    <section class="retirement-hero">
+        <div class="retirement-container">
+            <h1>Plan Your Perfect Retirement</h1>
+            <p>Build a secure and comfortable future with our comprehensive retirement planning tools and strategies. Our AI-powered insights help you make informed decisions to achieve your retirement goals.</p>
+            <div class="cta-buttons">
+                <a href="#calculator" class="button button-primary">Calculate Your Retirement</a>
+                <a href="#strategies" class="button button-secondary">Explore Strategies</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Retirement Navigation -->
+    <div class="retirement-nav">
+        <ul>
+            <li><a href="#strategies">Retirement Strategies</a></li>
+            <li><a href="#schemes">Retirement Schemes</a></li>
+            <li><a href="#ideal-age">Ideal Retirement Age</a></li>
+            <li><a href="#financial-planning">Financial Planning</a></li>
+            <li><a href="#post-retirement">Post-Retirement</a></li>
+            <li><a href="#faqs">FAQs</a></li>
+        </ul>
+    </div>
+
+    <!-- Retirement Strategies Section -->
+    <section class="retirement-section" id="strategies">
+        <div class="retirement-container">
+            <h2>Effective Retirement Strategies</h2>
+            <p>Discover proven strategies to maximize your retirement savings and create a sustainable income stream for your golden years.</p>
+            
+            <div class="retirement-grid">
+                <div class="retirement-card">
+                    <div class="retirement-icon">
+                        <i class="fas fa-piggy-bank"></i>
+                    </div>
+                    <h3>Early Saving Advantage</h3>
+                    <p>Start saving early to leverage the power of compound interest. Even small contributions can grow significantly over time when you begin in your 20s or 30s.</p>
+                    <p>Our data shows that starting just 10 years earlier can double your retirement savings.</p>
+                </div>
+                
+                <div class="retirement-card">
+                    <div class="retirement-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3>Diversified Portfolio</h3>
+                    <p>Balance your investments across different asset classes to minimize risk while maximizing returns. Adjust your portfolio allocation as you approach retirement.</p>
+                    <p>Our AI recommends appropriate diversification strategies based on your age and risk tolerance.</p>
+                </div>
+                
+                <div class="retirement-card">
+                    <div class="retirement-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <h3>Tax-Efficient Investing</h3>
+                    <p>Utilize tax-advantaged retirement accounts to minimize tax burden and maximize growth. Strategic withdrawals can significantly increase your retirement income.</p>
+                    <p>Learn how to optimize your tax strategy across different account types.</p>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <!-- This would be replaced with actual chart implementation -->
+                <h3>Impact of Starting Age on Retirement Savings</h3>
+                <p>Interactive chart showing how starting age affects retirement savings growth</p>
+                <!-- Chart would be rendered here with JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Retirement Schemes Section -->
+    <section class="retirement-section" id="schemes">
+        <div class="retirement-container">
+            <h2>Retirement Schemes Comparison</h2>
+            <p>Explore different retirement plans and schemes to find the best fit for your financial situation and goals.</p>
+            
+            <div class="retirement-grid">
+                <div class="retirement-card">
+                    <div class="retirement-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3>401(k) Plans</h3>
+                    <p>Employer-sponsored retirement plans with potential matching contributions. Contributions are tax-deferred, reducing your current taxable income.</p>
+                    <ul>
+                        <li>2024 Contribution limit: $23,000</li>
+                        <li>Catch-up contributions (age 50+): $7,500</li>
+                        <li>Tax-deferred growth until withdrawal</li>
+                    </ul>
+                </div>
+                
+                <div class="retirement-card">
+                    <div class="retirement-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3>Individual Retirement Accounts (IRAs)</h3>
+                    <p>Personal retirement accounts with different tax advantages depending on the type (Traditional or Roth).</p>
+                    <ul>
+                        <li>2024 Contribution limit: $7,000</li>
+                        <li>Catch-up contributions (age 50+): $1,000</li>
+                        <li>Traditional: Tax-deductible contributions</li>
+                        <li>Roth: Tax-free qualified withdrawals</li>
+                    </ul>
+                </div>
+                
+                <div class="retirement-card">
+                    <div class="retirement-icon">
+                        <i class="fas fa-briefcase-medical"></i>
+                    </div>
+                    <h3>Health Savings Accounts (HSAs)</h3>
+                    <p>Triple tax advantage accounts that can be used as retirement savings vehicles when paired with high-deductible health plans.</p>
+                    <ul>
+                        <li>2024 Contribution limit: $4,150 (individual), $8,300 (family)</li>
+                        <li>Catch-up contributions (age 55+): $1,000</li>
+                        <li>Tax-deductible contributions, tax-free growth, and tax-free withdrawals for qualified medical expenses</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <!-- This would be replaced with actual chart implementation -->
+                <h3>Retirement Plan Comparison</h3>
+                <p>Interactive chart comparing growth potential of different retirement plans</p>
+                <!-- Chart would be rendered here with JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Ideal Retirement Age Section -->
+    <section class="retirement-section" id="ideal-age">
+        <div class="retirement-container">
+            <h2>Finding Your Ideal Retirement Age</h2>
+            <p>Determine the optimal retirement age based on your financial situation, health factors, and lifestyle preferences.</p>
+            
+            <div class="age-calculator" id="calculator">
+                <h3>Retirement Age Calculator</h3>
+                <p>Use our interactive tool to determine your ideal retirement age based on your current savings, income, and retirement goals.</p>
+                
+                <div class="calculator-inputs">
+                    <div class="input-group">
+                        <label for="current-age">Current Age</label>
+                        <input type="number" id="current-age" placeholder="e.g., 35">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="current-savings">Current Retirement Savings ($)</label>
+                        <input type="number" id="current-savings" placeholder="e.g., 50000">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="monthly-contribution">Monthly Contribution ($)</label>
+                        <input type="number" id="monthly-contribution" placeholder="e.g., 500">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="annual-income">Desired Annual Retirement Income ($)</label>
+                        <input type="number" id="annual-income" placeholder="e.g., 80000">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="life-expectancy">Life Expectancy</label>
+                        <input type="number" id="life-expectancy" placeholder="e.g., 85">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="return-rate">Expected Return Rate (%)</label>
+                        <input type="number" id="return-rate" placeholder="e.g., 7" step="0.1">
+                    </div>
+                </div>
+                
+                <button class="button button-primary" onclick="calculateRetirementAge()">Calculate</button>
+                
+                <div class="calculator-result" id="result-container" style="display: none;">
+                    <h4>Your Results</h4>
+                    <p>Based on your inputs, your ideal retirement age is: <strong id="retirement-age">65</strong></p>
+                    <p>Your estimated retirement savings at this age: <strong id="retirement-savings">$1,200,000</strong></p>
+                    <p>This will provide an estimated monthly income of: <strong id="monthly-income">$5,000</strong></p>
+                </div>
+            </div>
+            
+            <div class="retirement-grid">
+                <div class="retirement-card">
+                    <div class="retirement-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h3>Financial Factors</h3>
+                    <p>Consider your savings rate, investment returns, pension eligibility, and Social Security benefits when determining your retirement age.</p>
+                    <p>Our analysis shows that delaying retirement by just 3-5 years can increase your retirement income by 25-30%.</p>
+                </div>
+                
+                <div class="retirement-card">
+                    <div class="retirement-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>Health Considerations</h3>
+                    <p>Your health status, family medical history, and access to healthcare should influence your retirement timing decision.</p>
+                    <p>Early retirement may be advisable for those with health concerns, while good health might enable a longer working life.</p>
+                </div>
+                
+                <div class="retirement-card">
+                    <div class="retirement-icon">
+                        <i class="fas fa-umbrella-beach"></i>
+                    </div>
+                    <h3>Lifestyle Goals</h3>
+                    <p>Align your retirement age with your personal goals, such as travel, hobbies, family time, or phased retirement options.</p>
+                    <p>Consider how your retirement age affects your ability to pursue dream activities that require good health.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Financial Planning Section -->
+    <section class="retirement-section" id="financial-planning">
+        <div class="retirement-container">
+            <h2>Comprehensive Financial Planning</h2>
+            <p>Create a holistic financial plan that addresses all aspects of your retirement needs and goals.</p>
+            
+            <div class="timeline">
+                <div class="timeline-item timeline-left">
+                    <div class="timeline-content">
+                        <h3>30+ Years Before Retirement</h3>
+                        <p>Start saving early, even small amounts. Focus on aggressive growth investments. Establish emergency funds and insurance coverage.</p>
+                        <p>Key Action: Maximize contributions to employer-sponsored retirement plans.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item timeline-right">
+                    <div class="timeline-content">
+                        <h3>20-30 Years Before Retirement</h3>
+                        <p>Increase retirement contributions as income grows. Begin diversifying investments. Start college savings for children if applicable.</p>
+                        <p>Key Action: Aim to save 15-20% of income for retirement.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item timeline-left">
+                    <div class="timeline-content">
+                        <h3>10-20 Years Before Retirement</h3>
+                        <p>Review and adjust asset allocation. Consider catch-up contributions. Evaluate insurance needs and estate planning.</p>
+                        <p>Key Action: Create a preliminary retirement budget and income plan.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item timeline-right">
+                    <div class="timeline-content">
+                        <h3>5-10 Years Before Retirement</h3>
+                        <p>Shift to more conservative investments. Estimate retirement expenses accurately. Develop a Social Security claiming strategy.</p>
+                        <p>Key Action: Consider paying off major debts including mortgage.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item timeline-left">
+                    <div class="timeline-content">
+                        <h3>1-5 Years Before Retirement</h3>
+                        <p>Finalize retirement budget. Establish healthcare coverage plan. Create a withdrawal strategy for retirement accounts.</p>
+                        <p>Key Action: Build a cash reserve to cover 2-3 years of expenses.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="retirement-grid">
+                <div class="retirement-card">
+                    <div class="retirement-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <h3>Retirement Budget Planning</h3>
+                    <p>Create a detailed retirement budget that accounts for essential expenses, healthcare costs, discretionary spending, and inflation.</p>
+                    <p>Our AI tool can help you estimate your retirement expenses based on your current lifestyle and future goals.</p>
+                </div>
+                
+                <div class="retirement-card">
+                    <div class="retirement-icon">
+                        <i class="fas fa-hand-holding-usd"></i>
+                    </div>
+                    <h3>Income Optimization</h3>
+                    <p>Develop strategies to maximize retirement income from various sources including Social Security, pensions, investments, and annuities.</p>
+                    <p>Learn how to create a tax-efficient withdrawal strategy to stretch your retirement savings.</p>
+                </div>
+                
+                <div class="retirement-card">
+                    <div class="retirement-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Risk Management</h3>
+                    <p>Protect your retirement through appropriate insurance coverage, emergency funds, and contingency planning for unexpected events.</p>
+                    <p>Address key risks such as longevity risk, inflation risk, healthcare expenses, and market volatility.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Post-Retirement Management Section -->
+    <section class="retirement-section" id="post-retirement">
+        <div class="retirement-container">
+            <h2>Post-Retirement Management</h2>
+            <p>Successfully navigate your retirement years with strategic financial management and lifestyle adjustments.</p>
+            
+            <div class="retirement-grid">
+                <div class="retirement-card">
+                    <div class="retirement-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <h3>Sustainable Withdrawal Strategies</h3>
+                    <p>Implement the 4% rule or dynamic withdrawal strategies to ensure your retirement savings last throughout your lifetime.</p>
+                    <p>Our tools can help you adjust your withdrawal strategy based on market conditions and your changing needs.</p>
+                </div>
+                
+                <div class="retirement-card">
+                    <div class="retirement-icon">
+                        <i class="fas fa-hospital"></i>
+                    </div>
+                    <h3>Healthcare Management</h3>
+                    <p>Navigate Medicare, supplement insurance, and long-term care options to manage healthcare costs in retirement.</p>
+                    <p>Build a healthcare budget that accounts for increasing medical expenses as you age.</p>
+                </div>
+                
+                <div class="retirement-card">
+                    <div class="retirement-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3>Housing Decisions</h3>
+                    <p>Evaluate options such as aging in place, downsizing, retirement communities, or relocating to lower-cost areas.</p>
+                    <p>Consider how your housing choice affects your overall retirement finances and quality of life.</p>
+                </div>
+                
+                <div class="retirement-card">
+                    <div class="retirement-icon">
+                        <i class="fas fa-file-signature"></i>
+                    </div>
+                    <h3>Estate Planning</h3>
+                    <p>Ensure your assets are distributed according to your wishes through proper wills, trusts, power of attorney, and healthcare directives.</p>
+                    <p>Review and update your estate plan regularly to reflect changes in your situation and tax laws.</p>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <!-- This would be replaced with actual chart implementation -->
+                <h3>Retirement Income and Expenses Projection</h3>
+                <p>Interactive chart showing projected income and expenses throughout retirement years</p>
+                <!-- Chart would be rendered here with JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="retirement-section" id="faqs">
+        <div class="retirement-container">
+            <h2>Frequently Asked Questions</h2>
+            <p>Get answers to common questions about retirement planning and management.</p>
+            
+            <div class="faq-section">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How much money do I need to retire comfortably?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>The amount needed varies based on your desired lifestyle, location, and health status. A common guideline is to aim for 70-80% of your pre-retirement income. Our retirement calculator can help you determine a more personalized target based on your specific situation.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>When should I start taking Social Security benefits?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You can start taking Social Security benefits as early as age 62, but your benefits increase the longer you wait, up to age 70. The optimal time depends on your health, life expectancy, other sources of income, and financial needs. Taking benefits at your full retirement age (66-67 for most people) provides your full benefit amount.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How do I protect my retirement savings from market downturns?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Diversification is key to protecting your retirement savings. As you approach retirement, gradually shift to a more conservative asset allocation with a higher percentage of bonds and cash equivalents. Consider maintaining 2-3 years of expenses in cash or cash equivalents to avoid selling investments during market downturns. Some retirees also use annuities to provide guaranteed income regardless of market performance.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What healthcare options are available in retirement?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>For most Americans, Medicare becomes available at age 65. This includes Medicare Part A (hospital insurance) and Part B (medical insurance). Many retirees also purchase Medicare Supplement Insurance (Medigap) to cover costs not covered by Medicare. Medicare Part D covers prescription drugs. Long-term care insurance is another option to consider for potential nursing home or in-home care needs. If retiring before 65, you'll need to secure private health insurance until Medicare eligibility.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How does inflation affect my retirement planning?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Inflation erodes purchasing power over time, making goods and services more expensive. For retirement planning, it's essential to factor in an inflation rate (typically 2-3% annually) when calculating future expenses. To combat inflation, maintain some growth investments in your portfolio even after retirement, and consider inflation-protected securities like TIPS. Social Security benefits include cost-of-living adjustments, providing some protection against inflation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="retirement-section">
+        <div class="retirement-container" style="text-align: center;">
+            <h2>Start Planning Your Ideal Retirement Today</h2>
+            <p>Get personalized retirement planning assistance <p>Get personalized retirement planning assistance with our AI-powered tools and expert advisors. We'll help you create a comprehensive retirement strategy tailored to your unique goals.</p>
+            <div class="cta-buttons" style="margin-top: 2rem;">
+                <a href="#" class="button button-primary">Schedule a Free Consultation</a>
+                <a href="#" class="button button-secondary">Try Our Retirement Calculator</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h4>About FinPlanner</h4>
+                <p>Empowering individuals with AI-driven financial planning tools for a secure and prosperous future.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Our Services</a></li>
+                    <li><a href="#">Financial Tools</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Financial Guides</a></li>
+                    <li><a href="faq.html">FAQs</a></li>
+                    <li><a href="#">Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Stay Updated</h4>
+                <p>Subscribe to our newsletter for financial tips and updates.</p>
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Enter your email">
+                    <button type="submit" class="newsletter-button">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 FinPlanner. All rights reserved.</p>
+            <p>
+                <a href="#">Privacy Policy</a> |
+                <a href="#">Terms of Service</a> |
+                <a href="#">Cookie Policy</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle FAQ answers
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                faqItem.classList.toggle('active');
+                
+                // Change icon
+                const icon = question.querySelector('i');
+                if (faqItem.classList.contains('active')) {
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-up');
+                } else {
+                    icon.classList.remove('fa-chevron-up');
+                    icon.classList.add('fa-chevron-down');
+                }
+            });
+        });
+        
+        // Mobile menu toggle
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+        
+        // Sample function for retirement calculator
+        function calculateRetirementAge() {
+            // Get input values
+            const currentAge = parseInt(document.getElementById('current-age').value) || 35;
+            const currentSavings = parseInt(document.getElementById('current-savings').value) || 50000;
+            const monthlyContribution = parseInt(document.getElementById('monthly-contribution').value) || 500;
+            const desiredIncome = parseInt(document.getElementById('annual-income').value) || 80000;
+            const lifeExpectancy = parseInt(document.getElementById('life-expectancy').value) || 85;
+            const returnRate = parseFloat(document.getElementById('return-rate').value) || 7;
+            
+            // Simple calculation (this would be more complex in a real application)
+            let retirementAge = 65;
+            
+            // Simulate some calculation logic
+            const annualContribution = monthlyContribution * 12;
+            const yearsToContribute = retirementAge - currentAge;
+            const futureValue = currentSavings * Math.pow(1 + returnRate/100, yearsToContribute) + 
+                                annualContribution * ((Math.pow(1 + returnRate/100, yearsToContribute) - 1) / (returnRate/100));
+            
+            // Calculate estimated monthly income based on the 4% rule
+            const safeWithdrawalRate = 0.04;
+            const annualWithdrawal = futureValue * safeWithdrawalRate;
+            const monthlyIncome = annualWithdrawal / 12;
+            
+            // Adjust retirement age if needed based on target income
+            if (annualWithdrawal < desiredIncome) {
+                // Estimate additional years needed
+                const additionalYears = Math.ceil(Math.log(desiredIncome / annualWithdrawal) / Math.log(1 + returnRate/100));
+                retirementAge += Math.min(additionalYears, 10); // Cap at 10 additional years
+            } else if (annualWithdrawal > desiredIncome * 1.5) {
+                // Possibly retire earlier
+                const yearsEarlier = Math.floor(Math.log(annualWithdrawal / desiredIncome) / Math.log(1 + returnRate/100));
+                retirementAge -= Math.min(yearsEarlier, 5); // Cap at 5 years earlier
+            }
+            
+            // Display results
+            document.getElementById('retirement-age').textContent = retirementAge;
+            document.getElementById('retirement-savings').textContent = '$' + Math.round(futureValue).toLocaleString();
+            document.getElementById('monthly-income').textContent = '$' + Math.round(monthlyIncome).toLocaleString();
+            document.getElementById('result-container').style.display = 'block';
+        }
+        
+        // Add smooth scrolling for nav links
+        document.querySelectorAll('.retirement-nav a, .cta-buttons a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

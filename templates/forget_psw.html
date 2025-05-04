@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinPlanner - Reset Password</title>
+    <link href="{{ url_for('static', filename='login.css') }}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .error-message {
+            background-color: #ffecec;
+            color: #f44336;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 5px solid #f44336;
+            font-size: 14px;
+        }
+        
+        .progress-section {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+        
+        .progress-section::before {
+            content: "";
+            position: absolute;
+            top: 14px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #e0e0e0;
+            z-index: 1;
+        }
+        
+        .progress-step {
+            position: relative;
+            z-index: 2;
+            background: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .progress-step.active {
+            border-color: #4CAF50;
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .password-strength {
+            height: 5px;
+            width: 100%;
+            background: #f1f1f1;
+            margin-top: 5px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .password-strength-bar {
+            height: 100%;
+            width: 0%;
+            border-radius: 10px;
+            transition: width 0.3s, background-color 0.3s;
+        }
+        
+        .password-meter-weak {
+            background-color: #f44336;
+            width: 25%;
+        }
+        
+        .password-meter-medium {
+            background-color: #FFA500;
+            width: 50%;
+        }
+        
+        .password-meter-strong {
+            background-color: #4CAF50;
+            width: 100%;
+        }
+        
+        .password-feedback {
+            font-size: 12px;
+            margin-top: 5px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <a href="/" class="logo">
+                    <i class="fas fa-chart-line"></i>
+                    FinPlanner
+                </a>
+                <h1 class="login-title">Reset Your Password</h1>
+                <p class="login-subtitle">Create a new password for your account</p>
+                
+                {% if error %}
+                <div class="error-message">
+                    <i class="fas fa-exclamation-circle"></i> {{ error }}
+                </div>
+                {% endif %}
+                
+                <div class="progress-section">
+                    <div class="progress-step active"><i class="fas fa-envelope"></i></div>
+                    <div class="progress-step active"><i class="fas fa-key"></i></div>
+                    <div class="progress-step"><i class="fas fa-check"></i></div>
+                </div>
+            </div>
+
+            <form id="resetPasswordForm" method="POST" action="{{ url_for('reset_password', token=token) }}">
+                <div class="form-group">
+                    <label for="password" class="form-label">New Password</label>
+                    <input type="password" id="password" name="password" class="form-input" required>
+                    <div class="password-strength">
+                        <div class="password-strength-bar" id="passwordStrengthBar"></div>
+                    </div>
+                    <div class="password-feedback" id="passwordFeedback">Enter a new password</div>
+                    <div class="form-error" id="passwordError">Password must be at least 6 characters</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm_password" class="form-label">Confirm Password</label>
+                    <input type="password" id="confirm_password" name="confirm_password" class="form-input" required>
+                    <div class="form-error" id="confirmPasswordError">Passwords don't match</div>
+                </div>
+
+                <button type="submit" class="login-button">Reset Password</button>
+            </form>
+
+            <div class="login-divider"></div>
+
+            <p class="signup-prompt">
+                Remember your password? <a href="{{ url_for('login') }}" class="signup-link">Login</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('resetPasswordForm').addEventListener('submit', function(event) {
+            // Reset error messages
+            document.querySelectorAll('.form-error').forEach(error => {
+                error.style.display = 'none';
+            });
+            
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+            let isValid = true;
+            
+            // Validate password length
+            if (password.length < 6) {
+                document.getElementById('passwordError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate passwords match
+            if (password !== confirmPassword) {
+                document.getElementById('confirmPasswordError').style.display = 'block';
+                isValid = false;
+            }
+            
+            if (!isValid) {
+                event.preventDefault();
+            } else {
+                // Show loading state
+                const resetButton = document.querySelector('.login-button');
+                resetButton.textContent = 'Resetting...';
+                resetButton.disabled = true;
+            }
+        });
+
+        // Password strength meter
+        document.getElementById('password').addEventListener('input', function() {
+            const password = this.value;
+            const passwordStrengthBar = document.getElementById('passwordStrengthBar');
+            const passwordFeedback = document.getElementById('passwordFeedback');
+            
+            // Remove any existing classes
+            passwordStrengthBar.className = 'password-strength-bar';
+            
+            if (password.length === 0) {
+                passwordStrengthBar.style.width = '0%';
+                passwordFeedback.textContent = 'Enter a new password';
+                return;
+            }
+            
+            // Check password strength
+            let strength = 0;
+            if (password.length >= 6) strength += 1;
+            if (password.length >= 10) strength += 1;
+            if (/[A-Z]/.test(password)) strength += 1;
+            if (/[0-9]/.test(password)) strength += 1;
+            if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+            
+            // Update strength meter
+            if (strength <= 2) {
+                passwordStrengthBar.classList.add('password-meter-weak');
+                passwordFeedback.textContent = 'Weak password';
+                passwordFeedback.style.color = '#f44336';
+            } else if (strength <= 4) {
+                passwordStrengthBar.classList.add('password-meter-medium');
+                passwordFeedback.textContent = 'Medium strength password';
+                passwordFeedback.style.color = '#FFA500';
+            } else {
+                passwordStrengthBar.classList.add('password-meter-strong');
+                passwordFeedback.textContent = 'Strong password';
+                passwordFeedback.style.color = '#4CAF50';
+            }
+        });
+
+        // Add focus effects to input fields
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.classList.add('focused');
+            });
+
+            input.addEventListener('blur', () => {
+                input.parentElement.classList.remove('focused');
+            });
+        });
+    </script>
+</body>
+</html>
